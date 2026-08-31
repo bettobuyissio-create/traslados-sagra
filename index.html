@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traslados Sagra - Servicio Premium</title>
+    <!-- Tailwind CSS vía CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'sagra-gold': '#C5A065',
+                        'sagra-dark': '#111111',
+                        'sagra-input': '#1A1A1A'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Iconos de Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        input:focus, textarea:focus {
+            outline: none !important;
+            border-color: #C5A065 !important;
+            box-shadow: 0 0 0 2px rgba(197, 160, 101, 0.2) !important;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-sans min-h-screen flex flex-col justify-between">
+
+    <!-- ENCABEZADO Y INTRODUCCIÓN -->
+    <header class="text-center py-12 px-4 border-b border-sagra-gold/10">
+        <div class="max-w-4xl mx-auto space-y-6">
+            <!-- LOGO INTEGRADO -->
+            <div class="flex flex-col items-center justify-center space-y-3">
+                <div class="flex items-center space-x-4">
+                    <i data-lucide="car-front" class="w-12 h-12 text-sagra-gold"></i>
+                    <div class="w-px h-12 bg-white/20"></div>
+                    <span class="text-5xl font-light text-sagra-gold tracking-widest">TS</span>
+                </div>
+                <h1 class="text-2xl font-light tracking-[0.2em] text-sagra-gold uppercase mt-2">Traslados Sagra</h1>
+            </div>
+
+            <!-- TEXTO DE BIENVENIDA OBLIGATORIO -->
+            <div class="bg-sagra-dark border border-sagra-gold/20 rounded-2xl p-6 text-lg leading-relaxed max-w-2xl mx-auto shadow-2xl">
+                Somos Traslados Sagra, si necesitas que te llevemos a algún lado o hagamos un traslado pulsa aquí.
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="max-w-4xl mx-auto px-4 py-12 flex-grow w-full space-y-12">
+
+        <!-- OPCIONES / SERVICIOS PRINCIPALES -->
+        <section class="space-y-6">
+            <h2 class="text-xl font-semibold text-center text-sagra-gold uppercase tracking-wider">Paso 1: Selecciona tu servicio</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Opción 1: Mudanzas -->
+                <button onclick="seleccionarServicio('Traslados y Mudanzas')" 
+                        id="btn-mudanzas"
+                        class="service-card group bg-sagra-dark p-8 rounded-3xl border-2 border-sagra-gold/10 hover:border-sagra-gold transition-all duration-300 text-left flex items-start space-x-6 shadow-lg hover:shadow-sagra-gold/10">
+                    <div class="w-16 h-16 bg-sagra-gold/10 rounded-2xl flex items-center justify-center text-sagra-gold group-hover:bg-sagra-gold group-hover:text-black transition-colors duration-300">
+                        <i data-lucide="package" class="w-8 h-8"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-sagra-gold transition-colors">Traslados y Mudanzas</h3>
+                        <p class="text-gray-400 mt-1 text-sm">Cargas pesadas, muebles y mudanzas completas.</p>
+                    </div>
+                </button>
+
+                <!-- Opción 2: Taxi -->
+                <button onclick="seleccionarServicio('Servicio de Viaje / Traslado Personal')" 
+                        id="btn-taxi"
+                        class="service-card group bg-sagra-dark p-8 rounded-3xl border-2 border-sagra-gold/10 hover:border-sagra-gold transition-all duration-300 text-left flex items-start space-x-6 shadow-lg hover:shadow-sagra-gold/10">
+                    <div class="w-16 h-16 bg-sagra-gold/10 rounded-2xl flex items-center justify-center text-sagra-gold group-hover:bg-sagra-gold group-hover:text-black transition-colors duration-300">
+                        <i data-lucide="car" class="w-8 h-8"></i>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-sagra-gold transition-colors">Servicio de Viaje Personal</h3>
+                        <p class="text-gray-400 mt-1 text-sm">Traslados ejecutivos, al aeropuerto y viajes urbanos.</p>
+                    </div>
+                </button>
+
+            </div>
+        </section>
+
+        <!-- FORMULARIO INTERACTIVO -->
+        <section id="form-section" class="hidden bg-sagra-dark p-8 md:p-10 rounded-3xl border border-sagra-gold/20 shadow-2xl space-y-6">
+            <div class="border-b border-sagra-gold/20 pb-4 flex items-center justify-between">
+                <div>
+                    <span class="text-xs font-bold text-sagra-gold uppercase tracking-widest">Paso 2</span>
+                    <h3 id="form-title" class="text-2xl font-bold text-white">Detalles del Pedido</h3>
+                </div>
+                <i data-lucide="clipboard-text" class="w-8 h-8 text-sagra-gold/50"></i>
+            </div>
+
+            <form id="trasladosForm" onsubmit="enviarWhatsApp(event)" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Nombre -->
+                <div id="container-nombre" class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-300 mb-2" for="nombre">Nombre del cliente</label>
+                    <input type="text" id="nombre" required placeholder="Tu nombre completo" 
+                           class="w-full bg-sagra-input text-white px-5 py-4 rounded-xl border border-sagra-gold/10 focus:border-sagra-gold outline-none text-lg">
+                </div>
+
+                <!-- Ubicación actual -->
+                <div id="container-ubicacion" class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-300 mb-2" for="ubicacion">Ubicación actual</label>
+                    <input type="text" id="ubicacion" required placeholder="Calle, ciudad o referencia" 
+                           class="w-full bg-sagra-input text-white px-5 py-4 rounded-xl border border-sagra-gold/10 focus:border-sagra-gold outline-none text-lg">
+                </div>
+
+                <!-- Detalles (Solo se muestra en Mudanzas) -->
+                <div id="container-detalle" class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-300 mb-2" for="detalle">Detalles del traslado / Carga</label>
+                    <input type="text" id="detalle" placeholder="Ej: Cantidad de cajas, peso o tipo de muebles" 
+                           class="w-full bg-sagra-input text-white px-5 py-4 rounded-xl border border-sagra-gold/10 focus:border-sagra-gold outline-none text-lg">
+                </div>
+
+                <!-- Botón Enviar WhatsApp -->
+                <div class="md:col-span-2 pt-4">
+                    <button type="submit" 
+                            class="w-full bg-sagra-gold hover:bg-white text-black font-extrabold py-5 rounded-2xl shadow-lg hover:shadow-sagra-gold/30 transition-all duration-300 flex items-center justify-center space-x-3 text-xl uppercase tracking-wider">
+                        <i data-lucide="message-square" class="w-6 h-6"></i>
+                        <span>Enviar Pedido a WhatsApp</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- PIE DE PÁGINA (CONTACTO) -->
+    <footer class="bg-sagra-dark text-gray-500 py-10 px-4 text-center text-sm border-t border-sagra-gold/10">
+        <div class="max-w-4xl mx-auto space-y-4">
+            <p class="font-semibold text-sagra-gold uppercase tracking-widest">Traslados Sagra</p>
+            <p>Valencia, Venezuela</p>
+            <div class="flex items-center justify-center space-x-6 text-gray-400 text-base pt-2">
+                <span>+58 414 148 68 78</span>
+                <span class="text-sagra-gold/30">|</span>
+                <span>+58 414 431 45 99</span>
+            </div>
+            <p class="text-xs pt-4">© 2026 Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- LÓGICA JAVASCRIPT -->
+    <script>
+        lucide.createIcons();
+
+        const TU_NUMERO_AQUI = "584141486878"; 
+        let servicioSeleccionado = "";
+
+        function seleccionarServicio(servicio) {
+            servicioSeleccionado = servicio;
+
+            const formSection = document.getElementById('form-section');
+            const containerDetalle = document.getElementById('container-detalle');
+            const inputDetalle = document.getElementById('detalle');
+            const containerUbicacion = document.getElementById('container-ubicacion');
+
+            formSection.classList.remove('hidden');
+            document.getElementById('form-title').innerText = `Solicitar: ${servicio}`;
+
+            // Si es viaje personal, ocultamos la opción de detalle y quitamos el 'required'
+            if (servicio === 'Servicio de Viaje / Traslado Personal') {
+                containerDetalle.classList.add('hidden');
+                inputDetalle.removeAttribute('required');
+                inputDetalle.value = ""; 
+                containerUbicacion.classList.remove('md:col-span-1');
+                containerUbicacion.classList.add('md:col-span-2');
+            } else {
+                // Si es Traslados y Mudanzas, mostramos el campo de detalles
+                containerDetalle.classList.remove('hidden');
+                inputDetalle.setAttribute('required', 'true');
+                containerUbicacion.classList.remove('md:col-span-2');
+                containerUbicacion.classList.add('md:col-span-1');
+                containerDetalle.classList.remove('md:col-span-2');
+                containerDetalle.classList.add('md:col-span-1');
+            }
+
+            // Resaltar tarjeta seleccionada
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach(card => {
+                card.classList.remove('border-sagra-gold', 'shadow-sagra-gold/20');
+                card.classList.add('border-sagra-gold/10');
+            });
+
+            const selectedCardId = servicio === 'Traslados y Mudanzas' ? 'btn-mudanzas' : 'btn-taxi';
+            const selectedCard = document.getElementById(selectedCardId);
+            selectedCard.classList.remove('border-sagra-gold/10');
+            selectedCard.classList.add('border-sagra-gold', 'shadow-sagra-gold/20');
+
+            formSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function enviarWhatsApp(event) {
+            event.preventDefault();
+
+            if (!servicioSeleccionado) {
+                alert("Por favor, selecciona primero un servicio.");
+                return;
+            }
+
+            const nombre = document.getElementById('nombre').value.trim();
+            const ubicacion = document.getElementById('ubicacion').value.trim();
+            const detalleInput = document.getElementById('detalle');
+            const detalle = detalleInput ? detalleInput.value.trim() : "";
+
+            let textoMensaje = "";
+
+            if (servicioSeleccionado === 'Servicio de Viaje / Traslado Personal') {
+                textoMensaje = `Hola, necesito un servicio de ${servicioSeleccionado}. Mi nombre es ${nombre} y me encuentro en: ${ubicacion}.`;
+            } else {
+                textoMensaje = `Hola, necesito un servicio de ${servicioSeleccionado}. Mi nombre es ${nombre} y me encuentro en: ${ubicacion}. Detalle: ${detalle}.`;
+            }
+
+            const mensajeURL = encodeURIComponent(textoMensaje);
+            const urlWhatsApp = `https://wa.me/${TU_NUMERO_AQUI}?text=${mensajeURL}`;
+
+            window.open(urlWhatsApp, '_blank');
+        }
+    </script>
+</body>
+</html>
